@@ -29,6 +29,7 @@ namespace MovieApp
                 this.Close();
             }
             InitializeComponent();
+            this.WelcomeLabel.Content = "Witaj " + Session.userFirstName+"!";
         }
     }
 }

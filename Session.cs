@@ -9,5 +9,6 @@ namespace MovieApp
     public static class Session
     {
         public static int userID = -1;
+        public static string userFirstName = "";
     }
 }

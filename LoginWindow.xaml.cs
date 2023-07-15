@@ -24,22 +24,37 @@ namespace MovieApp
             InitializeComponent();
         }
         /// <summary>
-        /// Logowanie do aplikacji. Sprawdza czy użytkownik o podanej nazwie i haśle istnieje w bazie danych.
+        /// Logowanie do aplikacji. Przekazuje parametry do funkcji logowania.
+        /// Funkcja logowania sprawdza czy użytkownik o podanej nazwie i haśle istnieje w bazie danych i zwraca userID użytkownika
+        /// oraz zwraca true jeśli logowanie jest poprawne i false jeśli wystąpił błąd.
         /// W przypadku poprawnego logowania zapisuje ID użytkownika w klasie Session i zamyka okno logowania.
         /// W przypadku błędnego logowania wyświetla komunikat o błędzie.
         /// </summary>
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            if(DbManager.Login(this.userName.Text,this.password.Password, out int userID))
+            if(DbManager.Login(this.userName.Text,this.password.Password, out int userID, out string userFirstName))
             {
                 Session.userID = userID;
+                Session.userFirstName = userFirstName;
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Niepoprawna nazwa użytkownika lub hasło. Spróbuj ponownie.","Błąd logowania",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show("Niepoprawna nazwa użytkownika lub hasło. Spróbuj ponownie."
+                    ,"Błąd logowania",MessageBoxButton.OK,MessageBoxImage.Error);
             }
-                
         }
+        /// <summary>
+        /// Wywoływane po wciśnięciu klawisza w boxach okna logowania.
+        /// Jeśli klawisz to enter funkcja wywołuje funkcję Login_Click
+        /// </summary>
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Login_Click(sender, e);
+            }
+        }
+        // TODO: Dodać rejestrację użytkownika
     }
 }
