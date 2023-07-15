@@ -1,0 +1,384 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MovieDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="filmy">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazwa" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="opis" Type="text" />
+          <Property Name="rok_premiery" Type="smallint" />
+          <Property Name="budzet" Type="int" />
+          <Property Name="id_gatunek" Type="int" Nullable="false" />
+          <Property Name="id_rezyser" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="gatunki">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nazwa" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="opis" Type="text" />
+        </EntityType>
+        <EntityType Name="oceny">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_film" Type="int" Nullable="false" />
+          <Property Name="id_uzytkownik" Type="int" Nullable="false" />
+          <Property Name="ocena" Type="smallint" Nullable="false" />
+          <Property Name="opis" Type="text" />
+        </EntityType>
+        <EntityType Name="rezyserowie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="imie" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="nazwisko" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="kraj" Type="nvarchar" MaxLength="4" />
+          <Property Name="data_urodzenia" Type="date" />
+        </EntityType>
+        <EntityType Name="uzytkownicy">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nickname" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="imie" Type="nvarchar" MaxLength="30" />
+          <Property Name="nazwisko" Type="nvarchar" MaxLength="50" />
+          <Property Name="ulubiony_gatunek" Type="int" />
+          <Property Name="password" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK__filmy__id_gatune__3B75D760">
+          <End Role="gatunki" Type="Self.gatunki" Multiplicity="1" />
+          <End Role="filmy" Type="Self.filmy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gatunki">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="filmy">
+              <PropertyRef Name="id_gatunek" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__filmy__id_rezyse__3C69FB99">
+          <End Role="rezyserowie" Type="Self.rezyserowie" Multiplicity="1" />
+          <End Role="filmy" Type="Self.filmy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rezyserowie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="filmy">
+              <PropertyRef Name="id_rezyser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__oceny__id_film__4222D4EF">
+          <End Role="filmy" Type="Self.filmy" Multiplicity="1" />
+          <End Role="oceny" Type="Self.oceny" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="filmy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="oceny">
+              <PropertyRef Name="id_film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__oceny__id_uzytko__4316F928">
+          <End Role="uzytkownicy" Type="Self.uzytkownicy" Multiplicity="1" />
+          <End Role="oceny" Type="Self.oceny" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uzytkownicy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="oceny">
+              <PropertyRef Name="id_uzytkownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__uzytkowni__ulubi__3F466844">
+          <End Role="gatunki" Type="Self.gatunki" Multiplicity="0..1" />
+          <End Role="uzytkownicy" Type="Self.uzytkownicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gatunki">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="uzytkownicy">
+              <PropertyRef Name="ulubiony_gatunek" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MovieDBModelStoreContainer">
+          <EntitySet Name="filmy" EntityType="Self.filmy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="gatunki" EntityType="Self.gatunki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="oceny" EntityType="Self.oceny" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rezyserowie" EntityType="Self.rezyserowie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uzytkownicy" EntityType="Self.uzytkownicy" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__filmy__id_gatune__3B75D760" Association="Self.FK__filmy__id_gatune__3B75D760">
+            <End Role="gatunki" EntitySet="gatunki" />
+            <End Role="filmy" EntitySet="filmy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__filmy__id_rezyse__3C69FB99" Association="Self.FK__filmy__id_rezyse__3C69FB99">
+            <End Role="rezyserowie" EntitySet="rezyserowie" />
+            <End Role="filmy" EntitySet="filmy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__oceny__id_film__4222D4EF" Association="Self.FK__oceny__id_film__4222D4EF">
+            <End Role="filmy" EntitySet="filmy" />
+            <End Role="oceny" EntitySet="oceny" />
+          </AssociationSet>
+          <AssociationSet Name="FK__oceny__id_uzytko__4316F928" Association="Self.FK__oceny__id_uzytko__4316F928">
+            <End Role="uzytkownicy" EntitySet="uzytkownicy" />
+            <End Role="oceny" EntitySet="oceny" />
+          </AssociationSet>
+          <AssociationSet Name="FK__uzytkowni__ulubi__3F466844" Association="Self.FK__uzytkowni__ulubi__3F466844">
+            <End Role="gatunki" EntitySet="gatunki" />
+            <End Role="uzytkownicy" EntitySet="uzytkownicy" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MovieDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="filmy">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazwa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="rok_premiery" Type="Int16" />
+          <Property Name="budzet" Type="Int32" />
+          <Property Name="id_gatunek" Type="Int32" Nullable="false" />
+          <Property Name="id_rezyser" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="gatunki" Relationship="Self.FK__filmy__id_gatune__3B75D760" FromRole="filmy" ToRole="gatunki" />
+          <NavigationProperty Name="rezyserowie" Relationship="Self.FK__filmy__id_rezyse__3C69FB99" FromRole="filmy" ToRole="rezyserowie" />
+          <NavigationProperty Name="oceny" Relationship="Self.FK__oceny__id_film__4222D4EF" FromRole="filmy" ToRole="oceny" />
+        </EntityType>
+        <EntityType Name="gatunki">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nazwa" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="filmy" Relationship="Self.FK__filmy__id_gatune__3B75D760" FromRole="gatunki" ToRole="filmy" />
+          <NavigationProperty Name="uzytkownicy" Relationship="Self.FK__uzytkowni__ulubi__3F466844" FromRole="gatunki" ToRole="uzytkownicy" />
+        </EntityType>
+        <EntityType Name="oceny">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_film" Type="Int32" Nullable="false" />
+          <Property Name="id_uzytkownik" Type="Int32" Nullable="false" />
+          <Property Name="ocena" Type="Int16" Nullable="false" />
+          <Property Name="opis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="filmy" Relationship="Self.FK__oceny__id_film__4222D4EF" FromRole="oceny" ToRole="filmy" />
+          <NavigationProperty Name="uzytkownicy" Relationship="Self.FK__oceny__id_uzytko__4316F928" FromRole="oceny" ToRole="uzytkownicy" />
+        </EntityType>
+        <EntityType Name="rezyserowie">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="imie" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nazwisko" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kraj" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="data_urodzenia" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="filmy" Relationship="Self.FK__filmy__id_rezyse__3C69FB99" FromRole="rezyserowie" ToRole="filmy" />
+        </EntityType>
+        <EntityType Name="uzytkownicy">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nickname" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="imie" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="nazwisko" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ulubiony_gatunek" Type="Int32" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="gatunki" Relationship="Self.FK__uzytkowni__ulubi__3F466844" FromRole="uzytkownicy" ToRole="gatunki" />
+          <NavigationProperty Name="oceny" Relationship="Self.FK__oceny__id_uzytko__4316F928" FromRole="uzytkownicy" ToRole="oceny" />
+        </EntityType>
+        <Association Name="FK__filmy__id_gatune__3B75D760">
+          <End Role="gatunki" Type="Self.gatunki" Multiplicity="1" />
+          <End Role="filmy" Type="Self.filmy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gatunki">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="filmy">
+              <PropertyRef Name="id_gatunek" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__filmy__id_rezyse__3C69FB99">
+          <End Role="rezyserowie" Type="Self.rezyserowie" Multiplicity="1" />
+          <End Role="filmy" Type="Self.filmy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rezyserowie">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="filmy">
+              <PropertyRef Name="id_rezyser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__oceny__id_film__4222D4EF">
+          <End Role="filmy" Type="Self.filmy" Multiplicity="1" />
+          <End Role="oceny" Type="Self.oceny" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="filmy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="oceny">
+              <PropertyRef Name="id_film" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__uzytkowni__ulubi__3F466844">
+          <End Role="gatunki" Type="Self.gatunki" Multiplicity="0..1" />
+          <End Role="uzytkownicy" Type="Self.uzytkownicy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="gatunki">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="uzytkownicy">
+              <PropertyRef Name="ulubiony_gatunek" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__oceny__id_uzytko__4316F928">
+          <End Role="uzytkownicy" Type="Self.uzytkownicy" Multiplicity="1" />
+          <End Role="oceny" Type="Self.oceny" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uzytkownicy">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="oceny">
+              <PropertyRef Name="id_uzytkownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MovieDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="filmy" EntityType="Self.filmy" />
+          <EntitySet Name="gatunki" EntityType="Self.gatunki" />
+          <EntitySet Name="oceny" EntityType="Self.oceny" />
+          <EntitySet Name="rezyserowie" EntityType="Self.rezyserowie" />
+          <EntitySet Name="uzytkownicy" EntityType="Self.uzytkownicy" />
+          <AssociationSet Name="FK__filmy__id_gatune__3B75D760" Association="Self.FK__filmy__id_gatune__3B75D760">
+            <End Role="gatunki" EntitySet="gatunki" />
+            <End Role="filmy" EntitySet="filmy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__filmy__id_rezyse__3C69FB99" Association="Self.FK__filmy__id_rezyse__3C69FB99">
+            <End Role="rezyserowie" EntitySet="rezyserowie" />
+            <End Role="filmy" EntitySet="filmy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__oceny__id_film__4222D4EF" Association="Self.FK__oceny__id_film__4222D4EF">
+            <End Role="filmy" EntitySet="filmy" />
+            <End Role="oceny" EntitySet="oceny" />
+          </AssociationSet>
+          <AssociationSet Name="FK__uzytkowni__ulubi__3F466844" Association="Self.FK__uzytkowni__ulubi__3F466844">
+            <End Role="gatunki" EntitySet="gatunki" />
+            <End Role="uzytkownicy" EntitySet="uzytkownicy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__oceny__id_uzytko__4316F928" Association="Self.FK__oceny__id_uzytko__4316F928">
+            <End Role="uzytkownicy" EntitySet="uzytkownicy" />
+            <End Role="oceny" EntitySet="oceny" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MovieDBModelStoreContainer" CdmEntityContainer="MovieDBEntities">
+          <EntitySetMapping Name="filmy">
+            <EntityTypeMapping TypeName="MovieDBModel.filmy">
+              <MappingFragment StoreEntitySet="filmy">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+                <ScalarProperty Name="opis" ColumnName="opis" />
+                <ScalarProperty Name="rok_premiery" ColumnName="rok_premiery" />
+                <ScalarProperty Name="budzet" ColumnName="budzet" />
+                <ScalarProperty Name="id_gatunek" ColumnName="id_gatunek" />
+                <ScalarProperty Name="id_rezyser" ColumnName="id_rezyser" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="gatunki">
+            <EntityTypeMapping TypeName="MovieDBModel.gatunki">
+              <MappingFragment StoreEntitySet="gatunki">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nazwa" ColumnName="nazwa" />
+                <ScalarProperty Name="opis" ColumnName="opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="oceny">
+            <EntityTypeMapping TypeName="MovieDBModel.oceny">
+              <MappingFragment StoreEntitySet="oceny">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_film" ColumnName="id_film" />
+                <ScalarProperty Name="id_uzytkownik" ColumnName="id_uzytkownik" />
+                <ScalarProperty Name="ocena" ColumnName="ocena" />
+                <ScalarProperty Name="opis" ColumnName="opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rezyserowie">
+            <EntityTypeMapping TypeName="MovieDBModel.rezyserowie">
+              <MappingFragment StoreEntitySet="rezyserowie">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="imie" ColumnName="imie" />
+                <ScalarProperty Name="nazwisko" ColumnName="nazwisko" />
+                <ScalarProperty Name="kraj" ColumnName="kraj" />
+                <ScalarProperty Name="data_urodzenia" ColumnName="data_urodzenia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uzytkownicy">
+            <EntityTypeMapping TypeName="MovieDBModel.uzytkownicy">
+              <MappingFragment StoreEntitySet="uzytkownicy">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nickname" ColumnName="nickname" />
+                <ScalarProperty Name="imie" ColumnName="imie" />
+                <ScalarProperty Name="nazwisko" ColumnName="nazwisko" />
+                <ScalarProperty Name="ulubiony_gatunek" ColumnName="ulubiony_gatunek" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

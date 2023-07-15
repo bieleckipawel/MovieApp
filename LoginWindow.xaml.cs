@@ -23,5 +23,23 @@ namespace MovieApp
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// Logowanie do aplikacji. Sprawdza czy użytkownik o podanej nazwie i haśle istnieje w bazie danych.
+        /// W przypadku poprawnego logowania zapisuje ID użytkownika w klasie Session i zamyka okno logowania.
+        /// W przypadku błędnego logowania wyświetla komunikat o błędzie.
+        /// </summary>
+        private void Login_Click(object sender, RoutedEventArgs e)
+        {
+            if(DbManager.Login(this.userName.Text,this.password.Password, out int userID))
+            {
+                Session.userID = userID;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Niepoprawna nazwa użytkownika lub hasło. Spróbuj ponownie.","Błąd logowania",MessageBoxButton.OK,MessageBoxImage.Error);
+            }
+                
+        }
     }
 }

@@ -13,5 +13,6 @@ namespace MovieApp
     /// </summary>
     public partial class App : Application
     {
+        public int loggedInUserID;
     }
 }

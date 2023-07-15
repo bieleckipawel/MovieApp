@@ -22,6 +22,12 @@ namespace MovieApp
     {
         public MainWindow()
         {
+            LoginWindow _loginWindow = new LoginWindow();
+            _loginWindow.ShowDialog();
+            if(Session.userID == -1)
+            {
+                this.Close();
+            }
             InitializeComponent();
         }
     }
