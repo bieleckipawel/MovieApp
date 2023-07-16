@@ -5,21 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MovieApp"
         mc:Ignorable="d"
-        Title="MovieApp" Height="300" Width="300">
-    <Grid>
+        Title="MovieApp" Height="300" Width="300" ResizeMode="NoResize" Icon="/icon.png">
+    <Grid FocusManager.FocusedElement="{Binding ElementName=rate}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Background="#C4DFDF" FontSize="24" HorizontalAlignment="Left" Padding="0,20,0,0" Text="Ocena filmu " VerticalAlignment="Top" Width="300" Height="100" TextAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" ScrollViewer.VerticalScrollBarVisibility="Disabled" TextWrapping="Wrap" Name="TitleBox"/>
-        <StackPanel Grid.ColumnSpan="3" Margin="0,100,0,0" FocusManager.FocusedElement="{Binding ElementName=rate}">
+        <StackPanel Grid.ColumnSpan="3" Margin="0,100,0,0">
             <Label Content="Ocena (1-5):" Padding="20,0,0,0"/>
             <TextBox Name="rate" TextWrapping="Wrap" Text="" Width="265" Margin="0,5,0,0" KeyDown="OnKeyDown"/>
             <Label Content="Krótki opis:" Padding="20,0,0,0"/>
             <TextBox Name="rateDesc" TextWrapping="Wrap" Text="" Width="265" Margin="0,5,0,0" KeyDown="OnKeyDown"/>
             <Button Margin="0 15 0 0" Content="Dodaj ocenę" Width="132" Height="25" Name="Dodaj" Click="Add_Rate"/>
         </StackPanel>
-
     </Grid>
 </Window>

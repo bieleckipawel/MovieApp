@@ -160,7 +160,7 @@ namespace MovieApp
             foreach (var movie in movies)
             {
                 data[0].Add(movie.rateID);
-                    data[1].Add(movie.movieID);
+                data[1].Add(movie.movieID);
             }
             return data;
         }
