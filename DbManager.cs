@@ -34,13 +34,20 @@ namespace MovieApp
         }
         public static ObservableCollection<dynamic> MovieList()
         {
-            var list = (from m in db.filmy 
-                        select new { movieID = m.id, movieName = m.nazwa
-                        ,movieDir = (from n in db.rezyserowie where m.id_rezyser == n.id select n.imie+" "+n.nazwisko).FirstOrDefault()
-                        ,movieGen = (from n in db.gatunki where m.id_gatunek == n.id select n.nazwa).FirstOrDefault()
-                        ,movieDesc = m.opis
-                        ,movieRat = (from n in db.oceny where m.id == n.id_film select (double)n.ocena).Average()
-                        });;
+            var list = (from m in db.filmy
+                        select new
+                        {
+                            movieID = m.id,
+                            movieName = m.nazwa
+                        ,
+                            movieDir = (from n in db.rezyserowie where m.id_rezyser == n.id select n.imie + " " + n.nazwisko).FirstOrDefault()
+                        ,
+                            movieGen = (from n in db.gatunki where m.id_gatunek == n.id select n.nazwa).FirstOrDefault()
+                        ,
+                            movieDesc = m.opis
+                        ,
+                            movieRat = Math.Round((from n in db.oceny where m.id == n.id_film select (double)n.ocena).Average(), 2)
+                        }) ;
             ObservableCollection<dynamic> observableList = new ObservableCollection<dynamic>(list);
             return observableList;
         }

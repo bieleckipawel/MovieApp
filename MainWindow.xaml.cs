@@ -22,6 +22,8 @@ namespace MovieApp
     {
         public MainWindow()
         {
+            //Przed inicjalizacją głównego okna otwieram okno logowania.
+            //Jeśli nie zostanie zwrócone poprawne ID użytkownika to zamykam aplikację.
             LoginWindow _loginWindow = new LoginWindow();
             _loginWindow.ShowDialog();
             if(Session.userID == -1)
@@ -30,8 +32,14 @@ namespace MovieApp
             }
             
             InitializeComponent();
+            //Ustawiam powitanie zalogowanego użytkownika.
+            this.WelcomeLabel.Content = "Witaj " + Session.userFirstName + "!";
+            //Pobieram listę filmów z bazy danych i przypisuję ją do DataGrid.
             this.MovieGrid.ItemsSource = DbManager.MovieList();
-            this.WelcomeLabel.Content = "Witaj " + Session.userFirstName+"!";
+        }
+        void MovieGrid_OpenRate(object sender, MouseButtonEventArgs e)
+        {
+            Console.WriteLine("Chcesz ocenić chujowy film.");
         }
     }
 }

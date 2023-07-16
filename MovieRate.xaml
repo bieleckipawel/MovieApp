@@ -1,4 +1,4 @@
-﻿<Window x:Class="MovieApp.MainWindow"
+﻿<Window x:Class="MovieApp.MovieRate"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,18 +18,16 @@
             <Label Content="MovieApp" FontSize="16" FontFamily="Arial" HorizontalAlignment="Right" DockPanel.Dock="Right" VerticalAlignment="Center"/>
         </DockPanel>
         <DockPanel LastChildFill="False" Grid.Row="1">
-            <Button Name="AddMovieButton" Content="Dodaj film" Margin="10,5,30,5" DockPanel.Dock="Right"/>
-            <Button Name="DirectorListButton" Content="Lista reżyserów" Margin="0,5,0,5" DockPanel.Dock="Right"/>
-            <Label Content="Kliknij dwukrotnie na wybrany film aby zobaczyć oceny bądź ocenić" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic"/>
+            <Button Name="ReturnButton" Content="Powrót" Margin="10,5,30,5" DockPanel.Dock="Right"/>
+            <Button Name="AddRateButton" Content="Dodaj ocenę" Margin="0,5,0,5" DockPanel.Dock="Right"/>
+            <Label Name="TaskLabel" Content="Oceny filmu " Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic"/>
         </DockPanel>
         <DataGrid x:Name="MovieGrid" Grid.Row="2" AutoGenerateColumns="False" ColumnWidth="*" MouseDoubleClick="MovieGrid_OpenRate" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Lp." Binding="{Binding movieID}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Nazwa filmu" Binding="{Binding movieName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Reżyser" Binding="{Binding movieDir}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Gatunek" Binding="{Binding movieGen}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Opis" Binding="{Binding movieDesc}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Średnia ocen" Binding="{Binding movieRat, StringFormat={}{0:F2}}"></DataGridTextColumn>
+                <!--<DataGridTextColumn Header="Lp." Binding="{Binding movieID}"></DataGridTextColumn>-->
+                <DataGridTextColumn Header="Użytkownik" Binding="{Binding movieName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Ocena" Binding="{Binding movieDir}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Opis" Binding="{Binding movieGen}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
