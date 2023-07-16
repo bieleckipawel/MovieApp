@@ -13,13 +13,12 @@
             <RowDefinition Height="200*"/>
         </Grid.RowDefinitions>
         <DockPanel Width="800" Background="#FFC4DFDF" Grid.Row="0">
-            <Label x:Name="WelcomeLabel" Content="Witaj, " Width="84" VerticalAlignment="Center"/>
             <Image Source="/icon.png" Margin="0,0,30,0" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" />
             <Label Content="MovieApp" FontSize="16" FontFamily="Arial" HorizontalAlignment="Right" DockPanel.Dock="Right" VerticalAlignment="Center"/>
         </DockPanel>
         <DockPanel LastChildFill="False" Grid.Row="1">
-            <Button Name="ReturnButton" Content="Powrót" Margin="10,5,30,5" DockPanel.Dock="Right"/>
-            <Button Name="AddRateButton" Content="Dodaj ocenę" Margin="0,5,0,5" DockPanel.Dock="Right"/>
+            <Button Name="ReturnButton" Content="Powrót" Margin="10,5,30,5" DockPanel.Dock="Right" Click="ReturnButton_Click"/>
+            <Button Name="AddRateButton" Content="Dodaj ocenę" Margin="0,5,0,5" DockPanel.Dock="Right" Click="AddRateButton_Click"/>
             <Label Name="TaskLabel" Content="Oceny filmu " Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic"/>
         </DockPanel>
         <DataGrid x:Name="MovieGrid" Grid.Row="2" AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="True">

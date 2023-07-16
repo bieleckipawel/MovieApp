@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
@@ -80,15 +81,17 @@ namespace MovieApp
         }
         /// <summary>
         /// Pobiera oceny oraz dane o ocenach z tabeli oceny przy użyciu LINQ.
-        /// Nie obsługujemy wyjątków ponieważ w przypadku braku ocen dla filmu 
-        /// (lub braku filmu, co raczej nie powinno się zdarzyć) zwracana jest pusta lista.
-        // TODO: napisać jednak wyjątek bo co jeśli chcemy dodać ocenę do filmu którego nie ma?
+        /// W bieżącej implementacji nie zajmujemy się obsługą błędów bo przejmuje to funkcja w ViewModelu.
         /// </summary>
         /// <returns>
         /// ObservableCollection z danymi ocen dla konkretnego filmu.
+        /// Średnią ocenę dla filmu
+        /// Nazwę filmu
         /// </returns>
-        public static bool RateList(int movieID, out ObservableCollection<dynamic> observableList)
+        public static bool RateList(int movieID, out ObservableCollection<dynamic> observableList, out double avgRate, out string movieName)
         {
+            avgRate = 0;
+            movieName = "";
             var rates = (from m in db.oceny
                          where m.id_film == movieID
                          select new
@@ -102,9 +105,55 @@ namespace MovieApp
                          });
             var movieData = MovieList(movieID);
             observableList = new ObservableCollection<dynamic>(rates);
-            if (movieData.Any()) return true;
+            if (movieData.Any())
+            {
+                foreach (dynamic movie in movieData)
+                {
+                    avgRate = movie.movieRat;
+                    movieName = movie.movieName;
+                }
+                return true;
+            }
             else return false;
-            
+        }
+        public static bool AddRate(int movieID, short rate, string rateDesc)
+        {
+            int userID = Session.userID;
+            oceny nowaOcena = new oceny
+            {
+                id_film = movieID,
+                id_uzytkownik = userID,
+                ocena = rate,
+                opis = rateDesc
+            };
+            db.oceny.Add(nowaOcena);
+            if (db.SaveChanges() > 0) return true;
+            else return false;
+        }
+        public static bool UpdateRate(int movieID, short rate, string rateDesc)
+        {
+
+        }
+        public static List<int> GetUsersRatedMovies(int userID)
+        {
+            var movies = from m in db.oceny
+                         where m.id_uzytkownik == userID
+                         select m.id_film;
+            List<int> data = new List<int>();
+            foreach(var movie in movies)
+            {
+                data.Add(movie);
+            }
+            return data;
+        }
+        public static bool DidUserAlreadyRateThisMovie(int userID, int movieID)
+        {
+            var info = GetUsersRatedMovies(userID);
+            if (info.Contains(movieID))
+            {
+                return true;
+            }
+            else return false;
         }
     }
 }

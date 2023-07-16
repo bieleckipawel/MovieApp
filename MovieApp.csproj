@@ -67,6 +67,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddRate.xaml.cs">
+      <DependentUpon>AddRate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DbManager.cs" />
     <Compile Include="filmy.cs">
       <DependentUpon>MovieDB.tt</DependentUpon>
@@ -93,6 +96,10 @@
     <Compile Include="uzytkownicy.cs">
       <DependentUpon>MovieDB.tt</DependentUpon>
     </Compile>
+    <Page Include="AddRate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

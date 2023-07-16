@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,23 +21,53 @@ namespace MovieApp
     /// </summary>
     public partial class MovieRate : Window
     {
+        public static int globalMovieID;
+        public static string globalMovieName;
+        /// <summary>
+        /// Okno wyświetlające oceny filmu.
+        /// Pozwala również na dodanie oceny.
+        /// </summary>
+        /// <param name="movieID">
+        /// ID filmu, którego oceny chcemy wyświetlić.
+        /// </param>
         public MovieRate(int movieID)
-        {   
+        {
+            MovieRate.globalMovieID = movieID;
             InitializeComponent();
-            this.WelcomeLabel.Content = "Witaj " + Session.userFirstName + "!";
-            //Pobieram listę ocen z bazy danych i przypisuję ją do DataGrid.
-            //Jak nie mam takiego filmu to musi być baza uszkodzona, innej opcji ATM nie widzę.
+            if (this.Refresh()) this.Show();
+            else this.Close();
+        }
+        //Pobieram listę ocen z bazy danych i przypisuję ją do DataGrid.
+        //Jak nie mam takiego filmu to muszą być niespójne tabele filmy i oceny, innej opcji ATM nie widzę.
+        public bool Refresh()
+        {
             ObservableCollection<dynamic> rateList = new ObservableCollection<dynamic>();
-            if(DbManager.RateList(movieID,out rateList)){
-                this.Show();
+            if (DbManager.RateList(globalMovieID, out rateList, out double avgRate, out string movieName))
+            {
                 this.MovieGrid.ItemsSource = rateList;
+                MovieRate.globalMovieName = movieName;
+                this.TaskLabel.Content = "Oceny filmu " + movieName + "; średnia ocena: " + avgRate;
+                return true;
             }
             else
             {
                 MessageBox.Show("Błąd spójności bazy danych. Spróbuj ponownie lub skontaktuj się z twórcą."
                     , "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-                this.Close();
+                return false;
             }
+        }
+        /// <summary>
+        /// Zamykam okno przyciskiem "Powrót".
+        /// </summary>
+        private void ReturnButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void AddRateButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddRate _addRate = new AddRate(globalMovieID, globalMovieName);
+            _addRate.Closed += (s, args) => Refresh();
         }
     }
 }
