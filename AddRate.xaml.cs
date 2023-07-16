@@ -47,7 +47,8 @@ namespace MovieApp
                 }
                 else
                 {
-                    if(!DbManager.UpdateRate(rateID, globalMovieID, rateInt, rateDesc)) MessageBox.Show("Wystąpił błąd podczas próby aktualizacji oceny. Spróbuj ponownie lub skontaktuj się z twórcą."
+                    Console.WriteLine(rateID+"To ta pierdolona wartosc");
+                    if (!DbManager.UpdateRate(rateID, rateInt, rateDesc)) MessageBox.Show("Wystąpił błąd podczas próby aktualizacji oceny. Spróbuj ponownie lub skontaktuj się z twórcą."
                   , "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                     this.Close();
                     return;

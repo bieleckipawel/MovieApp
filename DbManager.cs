@@ -131,7 +131,7 @@ namespace MovieApp
             if (db.SaveChanges() > 0) return true;
             else return false;
         }
-        public static bool UpdateRate(int rateID, int movieID, short rate, string rateDesc)
+        public static bool UpdateRate(int rateID, short rate, string rateDesc)
         {
             int userID = Session.userID;
             var row = db.oceny.Find(rateID);
@@ -159,9 +159,8 @@ namespace MovieApp
             data[1] = new List<int>(); // Inicjalizacja id filmu
             foreach (var movie in movies)
             {
-                if (movie.rateID != null) { data[0].Add(movie.rateID);
-                data[1].Add(movie.movieID);}
-                
+                data[0].Add(movie.rateID);
+                    data[1].Add(movie.movieID);
             }
             return data;
         }
@@ -171,7 +170,8 @@ namespace MovieApp
             var info = GetUsersRatedMovies(userID);
             if (info[1].Contains(movieID))
             {
-                rateID = info[0].First();
+                int index = info[1].IndexOf(movieID);
+                rateID = info[0][index];
                 return true;
             }
             else return false;
