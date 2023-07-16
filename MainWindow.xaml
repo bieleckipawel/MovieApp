@@ -5,17 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MovieApp"
         mc:Ignorable="d"
-        Title="MovieApp - Menu główne" Height="450" Width="800">
-    <Grid>
+        Title="MovieApp" Height="450" Width="800" ResizeMode="NoResize" Icon="/icon.png">
+    <Grid HorizontalAlignment="Left">
         <Grid.RowDefinitions>
+            <RowDefinition Height="17*"/>
             <RowDefinition Height="17*"/>
             <RowDefinition Height="200*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="13*"/>
-            <ColumnDefinition Width="12*"/>
-        </Grid.ColumnDefinitions>
-        <Label Name="WelcomeLabel" Content="Witaj, " HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="85"/>
+        <DockPanel Width="800" Background="#FFC4DFDF" Grid.Row="0">
+            <Label x:Name="WelcomeLabel" Content="Witaj, " Width="84" VerticalAlignment="Center"/>
+            <Image Source="/icon.png" Margin="0,0,30,0" DockPanel.Dock="Right" HorizontalAlignment="Right" VerticalAlignment="Center" />
+            <Label Content="MovieApp" FontSize="16" FontFamily="Arial" HorizontalAlignment="Right" DockPanel.Dock="Right" VerticalAlignment="Center"/>
+        </DockPanel>
+        <DockPanel LastChildFill="False" Grid.Row="1">
+            <Button Name="AddMovieButton" Content="Dodaj film" Margin="10,5,30,5" DockPanel.Dock="Right"/>
+            <Button Name="DirectorListButton" Content="Lista reżyserów" Margin="0,5,0,5" DockPanel.Dock="Right"/>
+        </DockPanel>
+        <DataGrid x:Name="MovieGrid" Grid.Row="2" AutoGenerateColumns="False" ColumnWidth="*">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Lp." Binding="{Binding movieID}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Nazwa filmu" Binding="{Binding movieName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Reżyser" Binding="{Binding movieDir}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Gatunek" Binding="{Binding movieGen}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Opis" Binding="{Binding movieDesc}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Średnia ocen" Binding="{Binding movieRat}"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
 
     </Grid>
 </Window>

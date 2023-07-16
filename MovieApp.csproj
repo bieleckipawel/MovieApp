@@ -79,6 +79,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MovieDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="MovieList.cs" />
     <Compile Include="oceny.cs">
       <DependentUpon>MovieDB.tt</DependentUpon>
     </Compile>

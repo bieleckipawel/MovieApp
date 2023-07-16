@@ -28,7 +28,9 @@ namespace MovieApp
             {
                 this.Close();
             }
+            
             InitializeComponent();
+            this.MovieGrid.ItemsSource = DbManager.MovieList();
             this.WelcomeLabel.Content = "Witaj " + Session.userFirstName+"!";
         }
     }
