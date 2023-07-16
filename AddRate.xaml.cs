@@ -37,7 +37,7 @@ namespace MovieApp
                 return;
             }
             string rateDesc = this.rateDesc.Text.Trim();
-            if (DbManager.DidUserAlreadyRateThisMovie(Session.userID, globalMovieID))
+            if (DbManager.DidUserAlreadyRateThisMovie(Session.userID, globalMovieID, out int rateID))
             {
                 MessageBoxResult result = MessageBox.Show("Dodawałeś już ocenę dla tego filmu, czy zaktualizować?\nMożesz dodać jedną ocenę dla filmu.", "Potwierdzenie", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.No)
@@ -45,7 +45,13 @@ namespace MovieApp
                     this.Close();
                     return;
                 }
-                else DbManager.UpdateRate(globalMovieID, rateInt, rateDesc);
+                else
+                {
+                    if(!DbManager.UpdateRate(rateID, globalMovieID, rateInt, rateDesc)) MessageBox.Show("Wystąpił błąd podczas próby aktualizacji oceny. Spróbuj ponownie lub skontaktuj się z twórcą."
+                  , "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    this.Close();
+                    return;
+                }
             }
             if (DbManager.AddRate(globalMovieID, rateInt, rateDesc))
             {

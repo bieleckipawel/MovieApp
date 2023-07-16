@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
@@ -130,27 +131,47 @@ namespace MovieApp
             if (db.SaveChanges() > 0) return true;
             else return false;
         }
-        public static bool UpdateRate(int movieID, short rate, string rateDesc)
+        public static bool UpdateRate(int rateID, int movieID, short rate, string rateDesc)
         {
-
+            int userID = Session.userID;
+            var row = db.oceny.Find(rateID);
+            if (row != null)
+            {
+                row.ocena = rate;
+                row.opis = rateDesc;
+                db.oceny.AddOrUpdate(row);
+                if (db.SaveChanges()>0) return true;
+                else return false;
+            }
+            return false;
         }
-        public static List<int> GetUsersRatedMovies(int userID)
+        public static List<int>[] GetUsersRatedMovies(int userID)
         {
             var movies = from m in db.oceny
                          where m.id_uzytkownik == userID
-                         select m.id_film;
-            List<int> data = new List<int>();
-            foreach(var movie in movies)
+                         select new
+                         {
+                             movieID = m.id_film,
+                             rateID = m.id
+                         };
+            List<int>[] data = new List<int>[2];
+            data[0] = new List<int>(); // Inicjalizacja id oceny
+            data[1] = new List<int>(); // Inicjalizacja id filmu
+            foreach (var movie in movies)
             {
-                data.Add(movie);
+                if (movie.rateID != null) { data[0].Add(movie.rateID);
+                data[1].Add(movie.movieID);}
+                
             }
             return data;
         }
-        public static bool DidUserAlreadyRateThisMovie(int userID, int movieID)
+        public static bool DidUserAlreadyRateThisMovie(int userID, int movieID, out int rateID)
         {
+            rateID = 0;
             var info = GetUsersRatedMovies(userID);
-            if (info.Contains(movieID))
+            if (info[1].Contains(movieID))
             {
+                rateID = info[0].First();
                 return true;
             }
             else return false;
