@@ -22,12 +22,12 @@
             <Button Name="AddRateButton" Content="Dodaj ocenę" Margin="0,5,0,5" DockPanel.Dock="Right"/>
             <Label Name="TaskLabel" Content="Oceny filmu " Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic"/>
         </DockPanel>
-        <DataGrid x:Name="MovieGrid" Grid.Row="2" AutoGenerateColumns="False" ColumnWidth="*" MouseDoubleClick="MovieGrid_OpenRate" IsReadOnly="True">
+        <DataGrid x:Name="MovieGrid" Grid.Row="2" AutoGenerateColumns="False" ColumnWidth="*" IsReadOnly="True">
             <DataGrid.Columns>
                 <!--<DataGridTextColumn Header="Lp." Binding="{Binding movieID}"></DataGridTextColumn>-->
-                <DataGridTextColumn Header="Użytkownik" Binding="{Binding movieName}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Ocena" Binding="{Binding movieDir}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Opis" Binding="{Binding movieGen}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Użytkownik" Binding="{Binding userName}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Ocena" Binding="{Binding movieRate}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Opis" Binding="{Binding rateDesc}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 

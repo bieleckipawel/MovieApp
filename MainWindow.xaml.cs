@@ -39,7 +39,10 @@ namespace MovieApp
         }
         void MovieGrid_OpenRate(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine("Chcesz ocenić chujowy film.");
+            dynamic selectedMovie = MovieGrid.SelectedItem;
+            //po co to liczyć dwa razy skoro mogę przekazać to jako parametr?
+            int movieID = selectedMovie.movieID;
+            MovieRate _movieRate = new MovieRate(movieID);    
         }
     }
 }
