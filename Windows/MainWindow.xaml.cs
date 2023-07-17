@@ -44,6 +44,7 @@ namespace MovieApp
             //po co to liczyć dwa razy skoro mogę przekazać to jako parametr?
             int movieID = selectedMovie.movieID;
             MovieRate _movieRate = new MovieRate(movieID);    
+            _movieRate.Closed += (s, args) => Refresh();
         }
         private void Refresh()
         {
