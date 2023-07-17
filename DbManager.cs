@@ -12,15 +12,33 @@ using System.Windows.Documents;
 
 namespace MovieApp
 {
+    /// <summary>
+    /// Klasa menedżera bazy danych. To tu się dzieje obsługa bazy danych.
+    /// </summary>
     public class DbManager
     {
         static MovieDBEntities db = new MovieDBEntities();
         //Nie haszujemy haseł w tym momencie.
         //TODO: hash i salt
         /// <summary>
-        /// Funkcja logowania sprawdza czy użytkownik o podanej nazwie i haśle istnieje w bazie danych i zwraca userID użytkownika oraz imie
-        /// oraz zwraca true jeśli logowanie jest poprawne i false jeśli wystąpił błąd.
+        /// Logowanie użytkownika.
         /// </summary>
+        /// <param name="userName">
+        /// Nazwa użytkownika wprowadzona w oknie logowania.
+        /// </param>
+        /// <param name="password">
+        /// Hasło wprowadzone w oknie logowania
+        /// </param>
+        /// <param name="userID">
+        /// Informacja zwrotna o ID użytkownika. Prawdopodobnie zostanie później zapisana w Session.UserID.
+        /// </param>
+        /// <param name="userFirstName">
+        /// Informacja zwrotna o imieniu użytkownika. Prawdopodobnie zostanie później zapisana w Session.UserFirstName.
+        /// </param>
+        /// <returns>
+        /// true, jeśli logowanie jest udane
+        /// false, jeśli logowanie nie jest udane
+        /// </returns>
 
         public static bool Login(string userName, string password, out int userID, out string userFirstName)
         {
@@ -61,6 +79,15 @@ namespace MovieApp
             ObservableCollection<dynamic> observableList = new ObservableCollection<dynamic>(list);
             return observableList;
         }
+        /// <summary>
+        /// Pobiera film o konkretnym ID z tabeli filmy przy użyciu LINQ.
+        /// </summary>
+        /// <param name="id">
+        /// ID filmu, którego parametry chcemy pobrać.
+        /// </param>
+        /// <returns>
+        /// ObservableCollection z danymi filmu
+        /// </returns>
         public static ObservableCollection<dynamic> MovieList(int id)
         {
             var list = (from m in db.filmy
@@ -83,13 +110,23 @@ namespace MovieApp
             return observableList;
         }
         /// <summary>
-        /// Pobiera oceny oraz dane o ocenach z tabeli oceny przy użyciu LINQ.
-        /// W bieżącej implementacji nie zajmujemy się obsługą błędów bo przejmuje to funkcja w ViewModelu.
+        /// Pobiera oceny dla konkretnego filmu.
         /// </summary>
+        /// <param name="movieID">
+        /// ID filmu którego oceny chcemy pobrać
+        /// </param>
+        /// <param name="observableList">
+        /// Lista ocen dla tego filmu do wyświetlenia w oknie.
+        /// </param>
+        /// <param name="avgRate">
+        /// Obliczona średnia ocena filmu
+        /// </param>
+        /// <param name="movieName">
+        /// Nazwa filmu z bazy danych
+        /// </param>
         /// <returns>
-        /// ObservableCollection z danymi ocen dla konkretnego filmu.
-        /// Średnią ocenę dla filmu
-        /// Nazwę filmu
+        /// true jeśli film został znaleziony w bazie
+        /// false jeśli film nie został znaleziony w bazie
         /// </returns>
         public static bool RateList(int movieID, out ObservableCollection<dynamic> observableList, out double avgRate, out string movieName)
         {
@@ -119,6 +156,22 @@ namespace MovieApp
             }
             else return false;
         }
+        /// <summary>
+        /// Dodawanie oceny do filmu.
+        /// </summary>
+        /// <param name="movieID">
+        /// ID filmu do którego chcemy dodać ocenę
+        /// </param>
+        /// <param name="rate">
+        /// Ocena sama w sobie.
+        /// </param>
+        /// <param name="rateDesc">
+        /// Opis oceny
+        /// </param>
+        /// <returns>
+        /// true, jesli udało się dodać ocenę,
+        /// false jeśli nie udało sie dodać oceny.
+        /// </returns>
         public static bool AddRate(int movieID, short rate, string rateDesc)
         {
             int userID = Session.userID;
@@ -133,6 +186,22 @@ namespace MovieApp
             if (db.SaveChanges() > 0) return true;
             else return false;
         }
+        /// <summary>
+        /// aktualizaja oceny
+        /// </summary>
+        /// <param name="rateID">
+        /// ID oceny którą zmieniamy
+        /// </param>
+        /// <param name="rate">
+        /// Ocena sama w sobie.
+        /// </param>
+        /// <param name="rateDesc">
+        /// Opis oceny
+        /// </param>
+        /// <returns>
+        /// true, jesli udało się zmienić ocenę,
+        /// false jeśli nie udało sie zmienić oceny.
+        /// </returns>
         public static bool UpdateRate(int rateID, short rate, string rateDesc)
         {
             int userID = Session.userID;
@@ -147,6 +216,15 @@ namespace MovieApp
             }
             return false;
         }
+        /// <summary>
+        /// Pobranie ocen użytkownika.
+        /// </summary>
+        /// <param name="userID">
+        /// ID użytkownika, którego oceny chcemy sprawdzić
+        /// </param>
+        /// <returns>
+        /// Zwraca listę ocen użytkownika w formacie listy, [0] to id oceny, [1] to id filmu
+        /// </returns>
         public static List<int>[] GetUsersRatedMovies(int userID)
         {
             var movies = from m in db.oceny
@@ -166,6 +244,22 @@ namespace MovieApp
             }
             return data;
         }
+        /// <summary>
+        /// Sprawdzenie czy użytkownik już ocenił dany film.
+        /// </summary>
+        /// <param name="userID">
+        /// ID użytkownika któego chcemy sprawdzić
+        /// </param>
+        /// <param name="movieID">
+        /// ID filmu który chcemy sprawdzić
+        /// </param>
+        /// <param name="rateID">
+        /// Informacja zwrotna z ID oceny którą udało się znaleźć, jeśli nie ma oceny to zwraca 0
+        /// </param>
+        /// <returns>
+        /// true, jeśli ocena już istnieje
+        /// false, jeśli ocena użytkownika tego filmu nie istniała.
+        /// </returns>
         public static bool DidUserAlreadyRateThisMovie(int userID, int movieID, out int rateID)
         {
             rateID = 0;
@@ -178,18 +272,55 @@ namespace MovieApp
             }
             else return false;
         }
+        /// <summary>
+        /// Pobiera listę gatunków filmowych
+        /// </summary>
+        /// <returns>
+        /// Lista gatunków filmowych
+        /// </returns>
         public static List<string> GetGenreData()
         {
             var genres = from m in db.gatunki
                          select m.nazwa;
             return genres.ToList();
         }
+        /// <summary>
+        /// Pobiera listę reżyserów
+        /// </summary>
+        /// <returns>
+        /// Listę reżyserów
+        /// </returns>
         public static List<string> GetDirectorData()
         {
             var genres = from m in db.rezyserowie
                          select m.imie+" "+m.nazwisko;
             return genres.ToList();
         }
+        /// <summary>
+        /// Dodawanie filmu do bazy danych
+        /// </summary>
+        /// <param name="name">
+        /// Nazwa filmu
+        /// </param>
+        /// <param name="desc">
+        /// Opis filmu
+        /// </param>
+        /// <param name="rel">
+        /// Rok premiery
+        /// </param>
+        /// <param name="bud">
+        /// Budżet filmu
+        /// </param>
+        /// <param name="genID">
+        /// ID gatunku
+        /// </param>
+        /// <param name="dirID">
+        /// ID reżysera
+        /// </param>
+        /// <returns>
+        /// true, jeśli udało się dodać wpis,
+        /// false jeśli nie.
+        /// </returns>
         public static bool AddMovie(string name, string desc, short rel, int bud, int genID, int dirID)
         {
             filmy newMovie = new filmy();
@@ -205,6 +336,10 @@ namespace MovieApp
             if (db.SaveChanges() > 0) return true;
             else return false;
         }
+        /// <summary>
+        /// Pobiera listę reżyserów
+        /// </summary>
+        /// <returns>Listę reżyserów</returns>
         public static ObservableCollection<dynamic> GetDirectors()
         {
             var directors = from m in db.rezyserowie
@@ -218,6 +353,17 @@ namespace MovieApp
             dynamic observableList = new ObservableCollection<dynamic>(directors);
             return observableList;
         }
+        /// <summary>
+        /// Dodawanie reżysera do bazy danych
+        /// </summary>
+        /// <param name="firstName"> Imię reżysera </param>
+        /// <param name="lastName">Nazwisko reżysera</param>
+        /// <param name="country">Kraj pochodzenia w formacie ISO 3166 ALPHA-2</param>
+        /// <param name="birthDate"> Data urodzenia w formacie dd.MM.yyyy </param>
+        /// <returns>
+        /// true jeśli udało się dodać film,
+        /// false jeśli nie udało się.
+        /// </returns>
         public static bool AddDirector(string firstName, string lastName, string country, DateTime birthDate) 
         {
             rezyserowie newDirector = new rezyserowie();
@@ -231,6 +377,28 @@ namespace MovieApp
             if(db.SaveChanges() > 0) return true; 
             else return false;
         }
+        /// <summary>
+        /// Rejestracja użytkownika. Dodajemy do bazy danych nowego usera
+        /// </summary>
+        /// <param name="username">
+        /// Nazwa użytkownika
+        /// </param>
+        /// <param name="fName">
+        /// Imię
+        /// </param>
+        /// <param name="lName">
+        /// Nazwisko
+        /// </param>
+        /// <param name="favGen">
+        /// Ulubiony gatunek do wyboru z listy rozwijanej
+        /// </param>
+        /// <param name="pass">
+        /// Hasło.
+        /// </param>
+        /// <returns>
+        /// true jeśli udało się utworzyć użytkownika,
+        /// false jeśli to nie zadziałało.
+        /// </returns>
         //Todo: to samo co w logowaniu. przydałoby się nie przechowywać haseł w DB.
         public static bool UserRegister(string username, string fName, string lName, int favGen, string pass)
         {
@@ -246,6 +414,16 @@ namespace MovieApp
             if(db.SaveChanges() > 0 ) return true;
             else return false;
         }
+        /// <summary>
+        /// Sprawdza czy użytkownik o podanym loginie przypadkiem już nie istnieje
+        /// </summary>
+        /// <param name="username">
+        /// Nazwa użytkownika do sprawdzenia
+        /// </param>
+        /// <returns>
+        /// true, jeśli użytkownik już istnieje
+        /// false, jeśli użytkownik nie istnieje.
+        /// </returns>
         public static bool UserExists(string username)
         {
             var userlist = from m in db.uzytkownicy select m.nickname;
