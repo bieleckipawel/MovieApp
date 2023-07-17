@@ -18,7 +18,7 @@
             <Label Content="MovieApp" FontSize="16" FontFamily="Arial" HorizontalAlignment="Right" DockPanel.Dock="Right" VerticalAlignment="Center"/>
         </DockPanel>
         <DockPanel LastChildFill="False" Grid.Row="1">
-            <Button Name="AddMovieButton" Content="Dodaj film" Margin="10,5,30,5" DockPanel.Dock="Right"/>
+            <Button Name="AddMovieButton" Content="Dodaj film" Margin="10,5,30,5" DockPanel.Dock="Right" Click="AddMovieButton_Click"/>
             <Label Content="Kliknij dwukrotnie na wybrany film aby zobaczyć oceny bądź ocenić" Width="400" HorizontalAlignment="Center" VerticalAlignment="Center" FontStyle="Italic"/>
         </DockPanel>
         <DataGrid x:Name="MovieGrid" Grid.Row="2" AutoGenerateColumns="False" ColumnWidth="*" MouseDoubleClick="MovieGrid_OpenRate" IsReadOnly="True">

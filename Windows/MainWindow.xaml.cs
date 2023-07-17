@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MovieApp.Windows;
 
 namespace MovieApp
 {
@@ -43,6 +44,11 @@ namespace MovieApp
             //po co to liczyć dwa razy skoro mogę przekazać to jako parametr?
             int movieID = selectedMovie.movieID;
             MovieRate _movieRate = new MovieRate(movieID);    
+        }
+
+        private void AddMovieButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddMovie _addMovie = new AddMovie();
         }
     }
 }

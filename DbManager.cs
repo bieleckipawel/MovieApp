@@ -55,7 +55,8 @@ namespace MovieApp
                         ,
                             movieDesc = m.opis
                         ,
-                            movieRat = Math.Round((from n in db.oceny where m.id == n.id_film select (double)n.ocena).Average(), 2)
+                        //jak nie mam ocen to głupioby było z nich liczyć średnią
+                            movieRat = (from n in db.oceny where m.id == n.id_film select (double)n.ocena).Any() ? Math.Round((from n in db.oceny where m.id == n.id_film select (double)n.ocena).Average(), 2) : 0
                         }) ;
             ObservableCollection<dynamic> observableList = new ObservableCollection<dynamic>(list);
             return observableList;
@@ -174,6 +175,33 @@ namespace MovieApp
                 rateID = info[0][index];
                 return true;
             }
+            else return false;
+        }
+        public static List<string> GetGenreData()
+        {
+            var genres = from m in db.gatunki
+                         select m.nazwa;
+            return genres.ToList();
+        }
+        public static List<string> GetDirectorData()
+        {
+            var genres = from m in db.rezyserowie
+                         select m.imie+" "+m.nazwisko;
+            return genres.ToList();
+        }
+        public static bool AddMovie(string name, string desc, short rel, int bud, int genID, int dirID)
+        {
+            filmy newMovie = new filmy();
+            {
+                newMovie.nazwa = name;
+                newMovie.opis = desc;
+                newMovie.rok_premiery = rel;
+                newMovie.budzet = bud;
+                newMovie.id_gatunek = genID;
+                newMovie.id_rezyser = dirID;
+            };
+            db.filmy.Add(newMovie);
+            if (db.SaveChanges() > 0) return true;
             else return false;
         }
     }
