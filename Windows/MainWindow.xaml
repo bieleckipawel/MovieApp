@@ -24,7 +24,7 @@
         </DockPanel>
         <DataGrid x:Name="MovieGrid" Grid.Row="2" AutoGenerateColumns="False" ColumnWidth="*" MouseDoubleClick="MovieGrid_OpenRate" IsReadOnly="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Lp." Binding="{Binding movieID}"></DataGridTextColumn>
+               <!-- <DataGridTextColumn Header="Lp." Binding="{Binding movieID}"></DataGridTextColumn> -->
                 <DataGridTextColumn Header="Nazwa filmu" Binding="{Binding movieName}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Reżyser" Binding="{Binding movieDir}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Gatunek" Binding="{Binding movieGen}"></DataGridTextColumn>
