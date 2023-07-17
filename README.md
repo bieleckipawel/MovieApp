@@ -5,4 +5,4 @@ Prosta aplikacja bazująca na bazie stworzonej na 1 sem, podczas zajęć "Wprowa
 MovieDB.sql - Baza danych
 
 Icon: https://www.iconfinder.com/icons/2205222/film_movie_record_video_icon - "Free for commercial use" license, no need for atributtion.
-Description and data is based on Wikipedia.
+Movie descriptions and data in the DB is based on Wikipedia.
