@@ -86,6 +86,9 @@
       <DependentUpon>MovieDB.tt</DependentUpon>
     </Compile>
     <Compile Include="MovieList.cs" />
+    <Compile Include="Windows\DirList.xaml.cs">
+      <DependentUpon>DirList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\MovieRate.xaml.cs">
       <DependentUpon>MovieRate.xaml</DependentUpon>
     </Compile>
@@ -104,6 +107,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\AddRate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\DirList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

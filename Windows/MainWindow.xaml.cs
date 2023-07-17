@@ -56,5 +56,9 @@ namespace MovieApp
             AddMovie _addMovie = new AddMovie();
             _addMovie.Closed += (s, args) => Refresh();
         }
+        private void DirList_Click(object sender, RoutedEventArgs e)
+        {
+            DirList _dirList = new DirList();
+        }
     }
 }

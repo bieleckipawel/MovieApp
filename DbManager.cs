@@ -205,5 +205,18 @@ namespace MovieApp
             if (db.SaveChanges() > 0) return true;
             else return false;
         }
+        public static ObservableCollection<dynamic> GetDirectors()
+        {
+            var directors = from m in db.rezyserowie
+                            select new
+                            {
+                                dirFName = m.imie,
+                                dirLName = m.nazwisko,
+                                dirCountry = m.kraj,
+                                dirBDate = m.data_urodzenia
+                            };
+            dynamic observableList = new ObservableCollection<dynamic>(directors);
+            return observableList;
+        }
     }
 }
