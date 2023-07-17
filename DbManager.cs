@@ -218,5 +218,18 @@ namespace MovieApp
             dynamic observableList = new ObservableCollection<dynamic>(directors);
             return observableList;
         }
+        public static bool AddDirector(string firstName, string lastName, string country, DateTime birthDate) 
+        {
+            rezyserowie newDirector = new rezyserowie();
+            {
+                newDirector.imie = firstName;
+                newDirector.nazwisko = lastName;
+                newDirector.kraj = country;
+                newDirector.data_urodzenia = birthDate;
+            };
+            db.rezyserowie.Add(newDirector);
+            if(db.SaveChanges() > 0) return true; 
+            else return false;
+        }
     }
 }

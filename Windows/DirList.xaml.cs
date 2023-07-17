@@ -36,8 +36,8 @@ namespace MovieApp.Windows
 
         private void AddDirButton_Click(object sender, RoutedEventArgs e)
         {
-            //AddRate _addRate = new AddRate();
-            //_addRate.Closed += (s, args) => Refresh();
+            AddDir _addDir = new AddDir();
+            _addDir.Closed += (s, args) => Refresh();
         }
     }
 }

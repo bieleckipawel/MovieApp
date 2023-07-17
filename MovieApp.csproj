@@ -67,6 +67,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Windows\AddDir.xaml.cs">
+      <DependentUpon>AddDir.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\AddMovie.xaml.cs">
       <DependentUpon>AddMovie.xaml</DependentUpon>
     </Compile>
@@ -102,6 +105,10 @@
     <Compile Include="uzytkownicy.cs">
       <DependentUpon>MovieDB.tt</DependentUpon>
     </Compile>
+    <Page Include="Windows\AddDir.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\AddMovie.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
