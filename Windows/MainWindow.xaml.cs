@@ -38,7 +38,7 @@ namespace MovieApp
             //Pobieram listę filmów z bazy danych i przypisuję ją do DataGrid.
             Refresh();
         }
-        void MovieGrid_OpenRate(object sender, MouseButtonEventArgs e)
+        private void MovieGrid_OpenRate(object sender, MouseButtonEventArgs e)
         {
             dynamic selectedMovie = MovieGrid.SelectedItem;
             //po co to liczyć dwa razy skoro mogę przekazać to jako parametr?

@@ -19,7 +19,7 @@ namespace MovieApp
     /// </summary>
     public partial class AddRate : Window
     {
-        public static int globalMovieID;
+        private static int globalMovieID;
         public AddRate(int movieID, string movieName)
         {
             InitializeComponent();

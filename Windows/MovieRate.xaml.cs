@@ -21,8 +21,8 @@ namespace MovieApp
     /// </summary>
     public partial class MovieRate : Window
     {
-        public static int globalMovieID;
-        public static string globalMovieName;
+        private static int globalMovieID;
+        private static string globalMovieName;
         /// <summary>
         /// Okno wyświetlające oceny filmu.
         /// Pozwala również na dodanie oceny.
@@ -39,7 +39,7 @@ namespace MovieApp
         }
         //Pobieram listę ocen z bazy danych i przypisuję ją do DataGrid.
         //Jak nie mam takiego filmu to muszą być niespójne tabele filmy i oceny, innej opcji ATM nie widzę.
-        public bool Refresh()
+        private bool Refresh()
         {
             ObservableCollection<dynamic> rateList = new ObservableCollection<dynamic>();
             if (DbManager.RateList(globalMovieID, out rateList, out double avgRate, out string movieName))
