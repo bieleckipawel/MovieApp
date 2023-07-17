@@ -20,6 +20,9 @@ namespace MovieApp.Windows
     /// </summary>
     public partial class AddMovie : Window
     {
+        /// <summary>
+        /// Konstruktor okna dodawania filmu.
+        /// </summary>
         public AddMovie()
         {
             InitializeComponent();

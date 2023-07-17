@@ -24,7 +24,7 @@ namespace MovieApp
         private static int globalMovieID;
         private static string globalMovieName;
         /// <summary>
-        /// Okno wyświetlające oceny filmu.
+        /// Konstruktor okna wyświetlającego oceny filmu.
         /// Pozwala również na dodanie oceny.
         /// </summary>
         /// <param name="movieID">

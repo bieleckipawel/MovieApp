@@ -20,6 +20,9 @@ namespace MovieApp.Windows
     /// </summary>
     public partial class AddDir : Window
     {
+        /// <summary>
+        /// Konstruktor okna dodawania reżysera.
+        /// </summary>
         public AddDir()
         {
             InitializeComponent();

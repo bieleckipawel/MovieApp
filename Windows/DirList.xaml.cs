@@ -19,6 +19,9 @@ namespace MovieApp.Windows
     /// </summary>
     public partial class DirList : Window
     {
+        /// <summary>
+        /// Konstruktor okna listy reżyserów.
+        /// </summary>
         public DirList()
         {
             InitializeComponent();

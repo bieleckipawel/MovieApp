@@ -21,6 +21,9 @@ namespace MovieApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Konstruktor głównego okna aplikacji, otwieranego przy uruchomieniu aplikacji.
+        /// </summary>
         public MainWindow()
         {
             //Przed inicjalizacją głównego okna otwieram okno logowania.

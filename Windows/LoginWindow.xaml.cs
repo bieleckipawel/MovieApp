@@ -19,6 +19,9 @@ namespace MovieApp
     /// </summary>
     public partial class LoginWindow : Window
     {
+        /// <summary>
+        /// Konstruktor okna logowania.
+        /// </summary>
         public LoginWindow()
         {
             InitializeComponent();

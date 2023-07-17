@@ -20,6 +20,15 @@ namespace MovieApp
     public partial class AddRate : Window
     {
         private static int globalMovieID;
+        /// <summary>
+        /// Konstruktor okna, w którym użytkownik może dodać ocenę dla filmu.
+        /// </summary>
+        /// <param name="movieID">
+        /// ID filmu dla którego dodajemy ocenę.
+        /// </param>
+        /// <param name="movieName">
+        /// Nazwa filmu dla którego dodajemy ocenę - służy do wyświetlania w tytule :)
+        /// </param>
         public AddRate(int movieID, string movieName)
         {
             InitializeComponent();
