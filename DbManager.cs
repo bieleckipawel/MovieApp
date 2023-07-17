@@ -76,7 +76,8 @@ namespace MovieApp
                         ,
                             movieDesc = m.opis
                         ,
-                            movieRat = Math.Round((from n in db.oceny where m.id == n.id_film select (double)n.ocena).Average(), 2)
+                            //jak nie mam ocen to głupioby było z nich liczyć średnią
+                            movieRat = (from n in db.oceny where m.id == n.id_film select (double)n.ocena).Any() ? Math.Round((from n in db.oceny where m.id == n.id_film select (double)n.ocena).Average(), 2) : 0
                         });
             ObservableCollection<dynamic> observableList = new ObservableCollection<dynamic>(list);
             return observableList;
