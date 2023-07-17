@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MovieApp.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,5 +60,9 @@ namespace MovieApp
             }
         }
         // TODO: Dodać rejestrację użytkownika
+        private void Register_Click(object sender, RoutedEventArgs e)
+        {
+            RegisterWindow _registerWindow = new RegisterWindow();
+        }
     }
 }

@@ -47,7 +47,7 @@ namespace MovieApp.Windows
                 //bo liczymy od 0
                 int genID = movieGen.SelectedIndex+1;
                 int dirID = movieDir.SelectedIndex+1;
-                if (genID == -1 || dirID == -1)
+                if (genID == 0 || dirID == 0)
                 {
                     Error();
                     return;
@@ -63,6 +63,7 @@ namespace MovieApp.Windows
                     Error();
                     return;
                 }
+                //TODO: zabronić dodania filmu jeśli jakiś o identycznej nazwie istnieje?
                 if(DbManager.AddMovie(name, desc, year, budget, genID, dirID))
                 {
                     this.Close();

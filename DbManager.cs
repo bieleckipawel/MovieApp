@@ -231,5 +231,26 @@ namespace MovieApp
             if(db.SaveChanges() > 0) return true; 
             else return false;
         }
+        //Todo: to samo co w logowaniu. przydałoby się nie przechowywać haseł w DB.
+        public static bool UserRegister(string username, string fName, string lName, int favGen, string pass)
+        {
+            uzytkownicy newUser = new uzytkownicy();
+            {
+                newUser.nickname = username;
+                newUser.imie = fName;
+                newUser.nazwisko = lName;
+                newUser.ulubiony_gatunek = favGen;
+                newUser.password = pass;
+            };
+            db.uzytkownicy.Add(newUser);
+            if(db.SaveChanges() > 0 ) return true;
+            else return false;
+        }
+        public static bool UserExists(string username)
+        {
+            var userlist = from m in db.uzytkownicy select m.nickname;
+            if (userlist.Contains(username)) return true;
+            else return false;
+        }
     }
 }

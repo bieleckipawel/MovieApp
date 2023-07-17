@@ -105,6 +105,9 @@
     <Compile Include="uzytkownicy.cs">
       <DependentUpon>MovieDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Windows\RegisterWindow.xaml.cs">
+      <DependentUpon>RegisterWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Windows\AddDir.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,6 +144,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Windows\MovieRate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\RegisterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
