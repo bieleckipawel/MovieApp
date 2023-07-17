@@ -54,6 +54,12 @@ namespace MovieApp.Windows
                     Error();
                     return;
                 }
+                //bracia Lumiere jako wyznacznik
+                if(year < 1895 || DateTime.UtcNow.Year < year || budget < 0) 
+                {
+                    Error();
+                    return;
+                }
                 if(DbManager.AddMovie(name, desc, year, budget, genID, dirID))
                 {
                     this.Close();

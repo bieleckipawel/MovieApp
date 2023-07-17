@@ -36,7 +36,7 @@ namespace MovieApp
             //Ustawiam powitanie zalogowanego użytkownika.
             this.WelcomeLabel.Content = "Witaj " + Session.userFirstName + "!";
             //Pobieram listę filmów z bazy danych i przypisuję ją do DataGrid.
-            this.MovieGrid.ItemsSource = DbManager.MovieList();
+            Refresh();
         }
         void MovieGrid_OpenRate(object sender, MouseButtonEventArgs e)
         {
@@ -45,10 +45,15 @@ namespace MovieApp
             int movieID = selectedMovie.movieID;
             MovieRate _movieRate = new MovieRate(movieID);    
         }
+        private void Refresh()
+        {
+            this.MovieGrid.ItemsSource = DbManager.MovieList();
+        }
 
         private void AddMovieButton_Click(object sender, RoutedEventArgs e)
         {
             AddMovie _addMovie = new AddMovie();
+            _addMovie.Closed += (s, args) => Refresh();
         }
     }
 }
